@@ -1,0 +1,110 @@
+.header {
+    margin-bottom: 50px
+}
+
+.footer {
+    margin-top: 50px
+}
+
+table.dataTable tbody tr {
+    background-color: unset
+}
+
+.lcol {
+    text-align: right;
+    padding-right: 10px;
+}
+
+.rcol {
+    text-align: left;
+}
+
+td {
+    vertical-align: top;
+}
+
+.hidden {
+    display: none;
+}
+
+.offline {
+    opacity: 0.5;
+}
+
+.icononly>span {
+    font-size: 0;
+}
+
+.armory td {
+    width: 100px;
+}
+
+.armory {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.dataTables_wrapper .dataTables_length,
+.dataTables_wrapper .dataTables_filter,
+.dataTables_wrapper .dataTables_info,
+.dataTables_wrapper .dataTables_processing,
+.dataTables_wrapper .dataTables_paginate {
+    color: unset
+}
+
+.narrow {
+    white-space: nowrap;
+    width: 1px
+}
+
+.red {
+    color: #910000
+}
+
+.green {
+    color: #00b400
+}
+
+.MathJax {
+    font-size: 2em!important
+}
+
+.center {
+    text-align: center
+}
+
+.Druid {
+    color: #ff7d0a
+}
+
+.Hunter {
+    color: #abd473
+}
+
+.Mage {
+    color: #69ccf0
+}
+
+.Paladin {
+    color: #f58cba
+}
+
+.Priest {
+    color: #fff
+}
+
+.Rogue {
+    color: #fff569
+}
+
+.Shaman {
+    color: #0070de
+}
+
+.Warlock {
+    color: #9482c9
+}
+
+.Warrior {
+    color: #c79c6e
+}
