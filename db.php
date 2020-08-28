@@ -65,7 +65,7 @@
     531 => 'Temple of Ahn\'Qiraj',
     533 => 'Naxxramas',
   );
-  
+
   $def = Array(
     'character_race' => Array(
       1 => 'Human',
@@ -78,7 +78,7 @@
       8 => 'Troll',
       9 => 'Goblin',
     ),
-  
+
     'character_class' => Array(
       1 => 'Warrior',
       2 => 'Paladin',

@@ -14,7 +14,7 @@ $accounts = "N/A";
 $totalchars = "N/A";
 $now = date("H:i:s");
 $con = @mysql_connect($ip, $user, $pass);
-    
+
 function make_players_array(){
 	global $con, $c_db, $pl_array, $maps_a;
     $i=0;
@@ -52,7 +52,7 @@ else
             $realmip = $row['address'];
         }
     };
-    
+
     unset($qry);
     $qry = @mysql_query("select name from " . mysql_real_escape_string($r_db) . ".realmlist where id = 1", $con);
     if ($qry)
@@ -68,29 +68,29 @@ else
         $realmstatus = "<FONT COLOR=red>Offline</FONT>";
     }
     else
-    { 
-        $realmstatus = "<FONT COLOR=green>Online</FONT>"; 
+    {
+        $realmstatus = "<FONT COLOR=green>Online</FONT>";
         fclose($sock);
     };
-    
+
     unset($qry);
     $qry = @mysql_query("SELECT * FROM " . mysql_real_escape_string($r_db) . ".uptime ORDER BY `starttime` DESC LIMIT 1", $con);
     if ($qry)
     {
-        $uptime_results = mysql_fetch_array($qry);    
+        $uptime_results = mysql_fetch_array($qry);
 
-        if ($uptime_results['uptime'] > 86400) { 
+        if ($uptime_results['uptime'] > 86400) {
             $uptime =  round(($uptime_results['uptime'] / 24 / 60 / 60),2)." Days";
         }
-        elseif($uptime_results['uptime'] > 3600) { 
+        elseif($uptime_results['uptime'] > 3600) {
             $uptime =  round(($uptime_results['uptime'] / 60 / 60),2)." Hours";
         }
         else
-        { 
+        {
             $uptime =  round(($uptime_results['uptime'] / 60),2)." Min";
         }
     };
-    
+
     unset($qry);
     $qry = @mysql_query("select Count(id) from " . mysql_real_escape_string($r_db) . ".account", $con);
     if ($qry)
@@ -100,7 +100,7 @@ else
             $accounts = $row['Count(id)'];
         }
     };
-    
+
     unset($qry);
     $qry = @mysql_query("select Count(guid) from " . mysql_real_escape_string($c_db) . ".characters where online=1", $con);
     if ($qry)
@@ -110,12 +110,12 @@ else
             $onlineplayers = $row['Count(guid)'];
         }
     };
-    
+
     $players=make_players_array();
 
     if (!$sort = &$_GET['s']) $sort=0;
     if (!$flag = &$_GET['f']) $flag=0;
-    if ($flag==0) {	$flag=1; $sort_type='<'; } 
+    if ($flag==0) {	$flag=1; $sort_type='<'; }
     else {	$flag=0; $sort_type='>'; }
     $link=$_SERVER['PHP_SELF']."?f=".$flag."&s=";
 

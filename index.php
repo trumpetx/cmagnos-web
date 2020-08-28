@@ -148,7 +148,7 @@ else
     </td><td style="width: 20%;"><td style="width: 40%; text-align: left;">
         <h4>Instructions</h4>
         <ul>
-        <li>Download a 1.12.1 client from <a href="https://www.dkpminus.com/blog/vanilla-wow-download-1-12-1-client/" target="_new">here</a> (fast) or <a href="Elysium Project Game Client.zip" target="_new">here</a> (slow) 
+        <li>Download a 1.12.1 client from <a href="https://www.dkpminus.com/blog/vanilla-wow-download-1-12-1-client/" target="_new">here</a> (fast) or <a href="Elysium Project Game Client.zip" target="_new">here</a> (slow)
         <li>
             Edit the content of the file <code>realmlist.wtf</code> to:<br/>
             <code>set realmlist <?php if(isset($realmip)){ echo $realmip; } else { echo "127.0.0.1";} ?></code>
