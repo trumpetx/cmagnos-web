@@ -13,13 +13,13 @@ $uptime = "N/A";
 $accounts = "N/A";
 $totalchars = "N/A";
 $now = date("H:i:s");
-$con = @mysql_connect($ip, $user, $pass);
+$con = mysqli_connect($ip, $user, $pass);
 
 function make_players_array(){
 	global $con, $c_db, $pl_array, $maps_a;
     $i=0;
-	$query = @mysql_query("SELECT name, race, class, online, level, gender, map, logout_time FROM " . mysql_real_escape_string($c_db) . ".characters ORDER BY `online` desc, `logout_time` desc   , `name` asc", $con);
-	while($result = mysql_fetch_assoc($query))
+    $query = mysqli_query($con, "SELECT name, race, class, online, level, gender, map, logout_time FROM " . mysqli_real_escape_string($con, $c_db) . ".characters ORDER BY `online` desc, `logout_time` desc   , `name` asc");
+	while($result = mysqli_fetch_assoc($query))
 	{
 		$char_data = ($result['level']);
 		$char_gender = ($result['gender']);
@@ -40,24 +40,24 @@ function make_players_array(){
 }
 
 if (!$con) {
-	$result = "> Unable to connect to database: " . mysql_error();
+	$result = "> Unable to connect to database: " . mysqli_error($con);
 }
 else
 {
-    $qry = @mysql_query("select address from " . mysql_real_escape_string($r_db) . ".realmlist where id = 1", $con);
+    $qry = mysqli_query($con, "select address from " . mysqli_real_escape_string($con, $r_db) . ".realmlist where id = 1");
     if ($qry)
     {
-        while ($row = mysql_fetch_assoc($qry))
+        while ($row = mysqli_fetch_assoc($qry))
         {
             $realmip = $row['address'];
         }
     };
 
     unset($qry);
-    $qry = @mysql_query("select name from " . mysql_real_escape_string($r_db) . ".realmlist where id = 1", $con);
+    $qry = mysqli_query($con, "select name from " . mysqli_real_escape_string($con, $r_db) . ".realmlist where id = 1");
     if ($qry)
     {
-        while ($row = mysql_fetch_assoc($qry))
+        while ($row = mysqli_fetch_assoc($qry))
         {
             $realmname = $row['name'];
         }
@@ -74,10 +74,10 @@ else
     };
 
     unset($qry);
-    $qry = @mysql_query("SELECT * FROM " . mysql_real_escape_string($r_db) . ".uptime ORDER BY `starttime` DESC LIMIT 1", $con);
+    $qry = mysqli_query($con, "SELECT * FROM " . mysqli_real_escape_string($con, $r_db) . ".uptime ORDER BY `starttime` DESC LIMIT 1");
     if ($qry)
     {
-        $uptime_results = mysql_fetch_array($qry);
+        $uptime_results = mysqli_fetch_array($qry);
 
         if ($uptime_results['uptime'] > 86400) {
             $uptime =  round(($uptime_results['uptime'] / 24 / 60 / 60),2)." Days";
@@ -92,20 +92,20 @@ else
     };
 
     unset($qry);
-    $qry = @mysql_query("select Count(id) from " . mysql_real_escape_string($r_db) . ".account", $con);
+    $qry = mysqli_query($con, "select Count(id) from " . mysqli_real_escape_string($con, $r_db) . ".account");
     if ($qry)
     {
-        while ($row = mysql_fetch_assoc($qry))
+        while ($row = mysqli_fetch_assoc($qry))
         {
             $accounts = $row['Count(id)'];
         }
     };
 
     unset($qry);
-    $qry = @mysql_query("select Count(guid) from " . mysql_real_escape_string($c_db) . ".characters where online=1", $con);
+    $qry = mysqli_query($con, "select Count(guid) from " . mysqli_real_escape_string($con, $c_db) . ".characters where online=1");
     if ($qry)
     {
-        while ($row = mysql_fetch_assoc($qry))
+        while ($row = mysqli_fetch_assoc($qry))
         {
             $onlineplayers = $row['Count(guid)'];
         }
@@ -147,7 +147,7 @@ else
 
 <?php include_once('header.php'); ?>
 
-<h2>Realm: <?php if(isset($realmname)){ echo $realmname; } else { echo "Lightbringer";} ?></h2>
+<h2>Realm: <?php if(isset($realmname)){ echo $realmname; } else { echo "Unknown";} ?></h2>
 <h3>Status: <?php echo $realmstatus; ?></h3>
 <table style="margin-left: auto; margin-right: auto;">
     <tr><td class="lcol">Server Time:</td><td class="rcol"><?= $now; ?></td></tr>

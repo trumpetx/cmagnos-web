@@ -36,7 +36,14 @@ td {
 }
 
 .armory td {
-    width: 100px;
+    width: 56px;
+    height: 56px;
+    /* border: 1px solid black; */
+}
+
+.armory .spacer {
+    margin-left: 25px;
+    margin-right: 25px;
 }
 
 .armory {

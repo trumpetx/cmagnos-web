@@ -2,16 +2,16 @@
 include_once('db.php');
 
 $result = "";
-$con = @mysql_connect($ip, $user, $pass);
+$con = mysqli_connect($ip, $user, $pass);
 if (!$con) {
-	$result = "> Unable to connect to database: " . mysql_error();
+	$result = "> Unable to connect to database: " . mysqli_error($con);
 }
 else
 {
-  $qry = @mysql_query("SELECT name, equipmentCache FROM ". mysql_real_escape_string($c_db) . ".characters WHERE name='".mysql_real_escape_string ($_GET['n'])."'", $con);
+  $qry = mysqli_query($con, "SELECT name, equipmentCache FROM ". mysqli_real_escape_string($con, $c_db) . ".characters WHERE name='".mysqli_real_escape_string ($con, $_GET['n'])."'");
   if ($qry)
   {
-    if ($row = mysql_fetch_assoc($qry))
+    if ($row = mysqli_fetch_assoc($qry))
     {
       $name = $row['name'];
       $equipmentCache = preg_split('/\s+/', $row['equipmentCache']);
@@ -41,7 +41,7 @@ else
     <tr><td> </td><td></td><td><?=$items[24]?></td></tr>
     <tr><td><?=$items[16]?></td><td></td><td><?=$items[26]?></td></tr>
     <tr><td colspan="3">&nbsp;</td></tr>
-    <tr><td></td><td><?=$items[30]?><span style="margin-left: 25px; margin-right: 25px;">&nbsp;</span><?=$items[32]?><span style="margin-left: 25px; margin-right: 25px;">&nbsp;</span><?=$items[34]?></td><td></td></tr>
+    <tr><td></td><td><?=$items[30]?><span class="spacer">&nbsp;</span><?=$items[32]?><span class="spacer">&nbsp;</span><?=$items[34]?></td><td></td></tr>
   </table>
 
   <script>var whTooltips = {colorLinks: true, iconizeLinks: true, renameLinks: true, iconSize: 'large'};</script>

@@ -1,5 +1,5 @@
 <?php
-  include_once('db_config.php');
+  include_once('./db_config.php');
   // Directions: place the lines below in db_config.php and edit to match your server
   // // Configuration.
   // // MaNGOSD IP.
@@ -18,6 +18,8 @@
   // $c_db = "characters";
   // // Images directory.
   // $img_base = "images/";
+  // Invite code
+  // $invite_code = "It's a secret to everybody";
   // // End config.
 
   $maps_a = Array(

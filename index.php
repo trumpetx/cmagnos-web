@@ -7,22 +7,22 @@ $email_chars = "/^[^0-9][A-z0-9_]+([.][A-z0-9_]+)*[@][A-z0-9_]+([.][A-z0-9_]+)*[
 
 $result = "";
 $realmip = "";
-$con = @mysql_connect($ip, $user, $pass);
+$con = mysqli_connect($ip, $user, $pass);
 if (!$con) {
-	$result = "> Unable to connect to database: " . mysql_error();
+	$result = "> Unable to connect to database: " . mysqli_error($con);
 }
 else
 {
-    $qry = @mysql_query("select address from " . mysql_real_escape_string($r_db) . ".realmlist where id = 1", $con);
+    $qry = mysqli_query($con, "select address from " . mysqli_real_escape_string($con, $r_db) . ".realmlist where id = 1");
     if ($qry)
     {
-        while ($row = mysql_fetch_assoc($qry))
+        while ($row = mysqli_fetch_assoc($qry))
         {
             $realmip = $row['address'];
         }
     }
     if (!empty($_POST)) {
-        if ((empty($_POST["username"]))||(empty($_POST["password"]))||(empty($_POST["email"]))||(empty($_POST["invite"]))||($_POST["invite"] != "MagmaCartaClub"))
+        if ((empty($_POST["username"]))||(empty($_POST["password"]))||(empty($_POST["email"]))||(empty($_POST["invite"]))||($_POST["invite"] != $invite_code))
         {
             $result = "> You did not enter all the required information.";
         }
@@ -64,17 +64,17 @@ else
             };
             if (strlen($result) < 1)
             {
-                $username = mysql_real_escape_string($username);
-                $password = mysql_real_escape_string($password);
-                $email = mysql_real_escape_string($email);
+                $username = mysqli_real_escape_string($con, $username);
+                $password = mysqli_real_escape_string($con, $password);
+                $email = mysqli_real_escape_string($con, $email);
                 unset($qry);
-                $qry = @mysql_query("select username from " . mysql_real_escape_string($r_db) . ".account where username = '" . $username . "'", $con);
+                $qry = mysqli_query($con, "select username from " . mysqli_real_escape_string($con, $r_db) . ".account where username = '" . $username . "'");
                 if (!$qry) {
-                    $result = "> Error querying database: " . mysql_error();
+                    $result = "> Error querying database: " . mysqli_error($con);
                 }
                 else
                 {
-                    if ($existing_username = mysql_fetch_assoc($qry)) {
+                    if ($existing_username = mysqli_fetch_assoc($qry)) {
                         foreach ($existing_username as $key => $value) {
                             $existing_username = $value;
                         };
@@ -86,9 +86,9 @@ else
                     else
                     {
                         unset($qry);
-                        $qry = @mysql_query("select email from " . mysql_real_escape_string($r_db) . ".account where email = '" . $email . "'", $con);
+                        $qry = mysqli_query($con, "select email from " . mysqli_real_escape_string($con, $r_db) . ".account where email = '" . $email . "'");
                         if (!$qry) {
-                            $result = "> Error querying database: " . mysql_error();
+                            $result = "> Error querying database: " . mysqli_error($con);
                         }
                         else
                         {
@@ -104,10 +104,10 @@ else
                             {
                                 unset($qry);
                                 $sha_pass_hash = sha1(strtoupper($username) . ":" . strtoupper($password));
-                                $register_sql = "insert into " . mysql_real_escape_string($r_db) . ".account (username, sha_pass_hash, email) values (upper('" . $username . "'),'" . $sha_pass_hash . "','" . $email . "')";
-                                $qry = @mysql_query($register_sql, $con);
+                                $register_sql = "insert into " . mysqli_real_escape_string($con, $r_db) . ".account (username, sha_pass_hash, email) values (upper('" . $username . "'),'" . $sha_pass_hash . "','" . $email . "')";
+                                $qry = mysqli_query($con, $register_sql);
                                 if (!$qry) {
-                                    $result = "> Error creating account: " . mysql_error();
+                                    $result = "> Error creating account: " . mysqli_error($con);
                                 }
                                 else
                                 {
@@ -148,7 +148,7 @@ else
     </td><td style="width: 20%;"><td style="width: 40%; text-align: left;">
         <h4>Instructions</h4>
         <ul>
-        <li>Download a 1.12.1 client from <a href="https://www.dkpminus.com/blog/vanilla-wow-download-1-12-1-client/" target="_new">here</a> (fast) or <a href="Elysium Project Game Client.zip" target="_new">here</a> (slow)
+        <li>Download a 1.12.1 client from <a href="https://www.dkpminus.com/blog/vanilla-wow-download-1-12-1-client/" target="_new">here</a></li>
         <li>
             Edit the content of the file <code>realmlist.wtf</code> to:<br/>
             <code>set realmlist <?php if(isset($realmip)){ echo $realmip; } else { echo "127.0.0.1";} ?></code>
