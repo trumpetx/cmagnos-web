@@ -92,7 +92,7 @@ else
                         }
                         else
                         {
-                            if ($existing_email = mysql_fetch_assoc($qry)) {
+                            if ($existing_email = mysqli_fetch_assoc($qry)) {
                                 foreach ($existing_email as $key => $value) {
                                     $existing_email = $value;
                                 };
