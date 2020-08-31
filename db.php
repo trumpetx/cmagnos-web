@@ -1,26 +1,31 @@
 <?php
-  include_once('./db_config.php');
   // Directions: place the lines below in db_config.php and edit to match your server
-  // // Configuration.
-  // // MaNGOSD IP.
-  // $realmip = "127.0.0.1";
-  // // MaNGOSD port.
-  // $realmport = "8085";
-  // // MySQL IP (and port).
-  // $ip = "127.0.0.1:3306";
-  // // MySQL Username.
-  // $user = "root";
-  // // MySQL Password.
-  // $pass = "root";
-  // // Realm database.
-  // $r_db = "realmd";
-  // // Character database.
-  // $c_db = "characters";
-  // // Images directory.
-  // $img_base = "images/";
+
+  // Configuration.
+  // MaNGOSD IP.
+  $realmip = "127.0.0.1";
+  // MaNGOSD port.
+  $realmport = "8085";
+  // MySQL IP (and port).
+  $ip = "127.0.0.1:3306";
+  // MySQL Username.
+  $user = "root";
+  // MySQL Password.
+  $pass = "root";
+  // Realm database.
+  $r_db = "classicrealmd";
+  // Character database.
+  $c_db = "classiccharacters";
   // Invite code
-  // $invite_code = "It's a secret to everybody";
-  // // End config.
+  $invite_code = "It's a secret to everybody";
+  // End config.
+
+  // Override default settings (speficially username/password)
+  if(file_exists('db_config.php')){
+      include('db_config.php');
+  } 
+
+  $img_base = "images/";
 
   $maps_a = Array(
     0 => 'Eastern Kingdoms',
