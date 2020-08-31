@@ -1,3 +1,6 @@
+<?php 
+  $serverName = "Crakel's Private Server";
+?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -8,14 +11,14 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/4.4.1/darkly/bootstrap.min.css" />
   <link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css"/>
-  <title>Crakel's Private Server</title>
+  <title><?=$serverName?></title>
   <link rel="stylesheet" href="/app.css"/>
 </head>
 <body class="">
     <div class="container">
       <div class="header">
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-          <a class="navbar-brand" href="/">Crakel's Private Server</a>
+          <a class="navbar-brand" href="/"><?=$serverName?></a>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02"
             aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
