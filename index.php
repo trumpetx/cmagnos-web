@@ -1,6 +1,46 @@
 ﻿<?php
 include_once('db.php');
+function bchexdec($hex) {
+    if(strlen($hex) == 1) {
+        return hexdec($hex);
+    } else {
+        $remain = substr($hex, 0, -1);
+        $last = substr($hex, -1);
+        return bcadd(bcmul(16, bchexdec($remain)), hexdec($last));
+    }
+}
 
+function bcdechex($dec) {
+    $last = bcmod($dec, 16);
+    $remain = bcdiv(bcsub($dec, $last), 16);
+
+    if($remain == 0) {
+        return dechex($last);
+    } else {
+        return bcdechex($remain).dechex($last);
+    }
+}
+
+function reverseHex($string)
+{
+    for ($i = 0, $length = strlen($string); $i < $length; $i += 2) {
+        $bytes[] = substr($string, $i, 2);
+    }
+    return implode(array_reverse($bytes ?? []));
+}
+
+function getSV($username, $password) {
+  $sha = hash('sha1', strtoupper($username . ":" . $password), true);
+
+  $n = bchexdec("894B645E89E1535BBDAD5B8B290650530801B18EBFBF5E8FAB3C82872A3E9BB7");
+  $generator = 7;
+
+  $s = strtoupper(bin2hex(random_bytes(32)));
+  $salt = hex2bin(reverseHex($s));
+  $x = bchexdec(reverseHex(hash('sha1', $salt . $sha)));
+  $v = strtoupper(bcdechex(bcpowmod($generator, $x, $n)));
+  return compact('s', 'v');
+}
 
 $user_chars = "#[^a-zA-Z0-9_\-]#";
 $email_chars = "/^[^0-9][A-z0-9_]+([.][A-z0-9_]+)*[@][A-z0-9_]+([.][A-z0-9_]+)*[.][A-z]{2,4}$/";
@@ -103,8 +143,8 @@ else
                             else
                             {
                                 unset($qry);
-                                $sha_pass_hash = sha1(strtoupper($username) . ":" . strtoupper($password));
-                                $register_sql = "insert into " . mysqli_real_escape_string($con, $r_db) . ".account (username, sha_pass_hash, email) values (upper('" . $username . "'),'" . $sha_pass_hash . "','" . $email . "')";
+                                $sv = getSV($username, $password);
+                                $register_sql = "insert into " . mysqli_real_escape_string($con, $r_db) . ".account (username, s, v, email) values (upper('" . $username . "'),'" . $sv['s'] . "','" . $sv['v'] . "','" . $email . "')";
                                 $qry = mysqli_query($con, $register_sql);
                                 if (!$qry) {
                                     $result = "> Error creating account: " . mysqli_error($con);
